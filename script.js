@@ -1,7 +1,7 @@
 // Ensure HTML loads before JavaScript runs
 $(document).ready(function() {
     
-    // Declare global variables
+    // Declare/Define global variables
     
     
     // Get date to display using .text to get API (moment) data to appear in the <p id="currentDay"> tag
@@ -14,11 +14,15 @@ $(document).ready(function() {
         $("#currentDay").text(moment().format('dddd, MMMM Do YYYY'));
 
     // Textarea input works with .past, .present, .future classes, and will be working with moment.js
-
+        // Using toggle logic & conditionals (if/else)
+            // Add/remove classes .past, .present, .future --> .toggleClass()
+            // Based on the current hour --> moment().hour(Number);
+                // Format - moment(currentHour).format("hh a");
+                // Use moment().isBefore("09 AM", "hour"); - isAfter, isSame
     
     // saveBtn will be working with local storage
-
-
+        // Will use localStorage.setItem on saveBtn click event
+        // Will use localStorage.getItem when page refreshed
 
 
 
