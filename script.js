@@ -6,6 +6,9 @@ $(document).ready(function() {
     // console.log(currentHour); // yield number of current hour
     var hoursList = document.querySelectorAll(".hour"); // used vanilla js instead of jquery because was only able to get one element with $(".hour")
     var dataHour;
+    var inputBlock;
+    var userInput;
+    var inputList = document.querySelectorAll(".inputText");
     
     // Get date to display using .text to get API (moment) data to appear in the <p id="currentDay"> tag
         // Syntax for working with moment.js
@@ -15,7 +18,7 @@ $(document).ready(function() {
         // console.log(moment()._d); // yields object of current day
         // console.log(moment().format('dddd, MMMM Do YYYY')); // yields string
         $("#currentDay").text(moment().format('dddd, MMMM Do YYYY'));
-
+        init();
     // Textarea input works with .past, .present, .future classes, and will be working with moment.js
         // Retreive data-hr value from hour divs
         for (var i=0; i<hoursList.length; i++) {
@@ -42,13 +45,27 @@ $(document).ready(function() {
     // saveBtn will be working with local storage
     // Click event on saveBtn triggers storeTask function
     $(".saveBtn").on("click", storeTask);
-        // Will use localStorage.setItem on saveBtn click event
-        function storeTask() {
-            alert("stored");
+    // Will use localStorage.setItem on saveBtn click event
+    function storeTask(event) {
+        inputBlock = event.target.previousElementSibling;
+        userInput = inputBlock.value.trim();
+        inputBlock.textContent = userInput;
+        inputBlock.parentElement.append(userInput);
+        var dataNum = inputBlock.getAttribute("data-num");
+        localStorage.setItem("userInput " + dataNum, userInput);
+        init();
+    }
+
+    // Will use localStorage.getItem when page refreshed
+    function init() {
+        for (var i=0; i<inputList.length; i++) {
+            var storedTasks = localStorage.getItem("userInput " + i);
+        
+            if (storedTasks !== null) {
+                inputList[i].textContent = storedTasks;
+            }
         }
-        // Will use localStorage.getItem when page refreshed
-
-
+    }
 
 
 
