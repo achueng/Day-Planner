@@ -1,51 +1,58 @@
 // Ensure HTML loads before JavaScript runs
 $(document).ready(function() {
     
-    // Declare/Define global variables & DOM elements
-    var currentHour = parseInt(moment().hour(Number).format("HH"));
-    // console.log(currentHour); // yield number of current hour
-    var hoursList = document.querySelectorAll(".hour"); // used vanilla js instead of jquery because was only able to get one element with $(".hour")
+    // Define Global Variable
+    var currentHour = parseInt(moment().hour(Number).format("HH")); 
+    // yield number of current hour
+
+    // DOM elements - used vanilla js instead of jquery to ensure all elements in classes are selected
+    var hoursList = document.querySelectorAll(".hour"); 
+    var inputList = document.querySelectorAll(".inputText");
+
+    // Declare Global Variables to be used later on
     var dataHour;
     var inputBlock;
     var userInput;
-    var inputList = document.querySelectorAll(".inputText");
     
-    // Get date to display using .text to get API (moment) data to appear in the <p id="currentDay"> tag
-        // Syntax for working with moment.js
-        // moment().year(year).month(month).date(day)
-            // to get current date: moment()._d;
-            // to get format: m.format(dddd, MMMM Do YYYY);
-        // console.log(moment()._d); // yields object of current day
-        // console.log(moment().format('dddd, MMMM Do YYYY')); // yields string
-        $("#currentDay").text(moment().format('dddd, MMMM Do YYYY'));
-        reset();
-        init();
-    // Textarea input works with .past, .present, .future classes, and will be working with moment.js
-        // Retreive data-hr value from hour divs
-        for (var i=0; i<hoursList.length; i++) {
-            dataHour = parseInt(hoursList[i].getAttribute("data-hr"));
+    // Get current date to display in the <p id="currentDay"> tag
+        // To get current date: moment()._d; 
+        // Format: m.format(dddd, MMMM Do YYYY);
+    $("#currentDay").text(moment().format('dddd, MMMM Do YYYY'));
+    
+    // Reset local storage at end of the day
+    reset();
+    // Retrive items from local storage and display on page
+    init();
+    
+    // Textarea input will have .past, .present, or .future class; work with moment to get current time
 
-            // Using toggle logic & conditionals (if/else) // Add/remove classes .past, .present, .future --> .classList.add/remove
-            if (dataHour === currentHour) {
-                hoursList[i].nextElementSibling.classList.add("present");
-                hoursList[i].nextElementSibling.classList.remove("past");
-                hoursList[i].nextElementSibling.classList.remove("future");
-            }
-            else if (dataHour < currentHour) {
-                hoursList[i].nextElementSibling.classList.add("past");
-                hoursList[i].nextElementSibling.classList.remove("present");
-                hoursList[i].nextElementSibling.classList.remove("future");
-            }
-            else { // in this case, dataHour > currentHour
-                hoursList[i].nextElementSibling.classList.add("future");
-                hoursList[i].nextElementSibling.classList.remove("past");
-                hoursList[i].nextElementSibling.classList.remove("present");
-            }
+    // Retreive data-hr value from hour divs
+    for (var i=0; i<hoursList.length; i++) {
+        dataHour = parseInt(hoursList[i].getAttribute("data-hr"));
+
+        // Using toggle logic & conditionals (if/else) // Add/remove classes .past, .present, .future --> .classList.add/remove
+        if (dataHour === currentHour) {
+            hoursList[i].nextElementSibling.classList.add("present");
+            hoursList[i].nextElementSibling.classList.remove("past");
+            hoursList[i].nextElementSibling.classList.remove("future");
         }
+        else if (dataHour < currentHour) {
+            hoursList[i].nextElementSibling.classList.add("past");
+            hoursList[i].nextElementSibling.classList.remove("present");
+            hoursList[i].nextElementSibling.classList.remove("future");
+        }
+        else { // in this case, dataHour > currentHour
+            hoursList[i].nextElementSibling.classList.add("future");
+            hoursList[i].nextElementSibling.classList.remove("past");
+            hoursList[i].nextElementSibling.classList.remove("present");
+        }
+    }
     
     // saveBtn will be working with local storage
+
     // Click event on saveBtn triggers storeTask function
     $(".saveBtn").on("click", storeTask);
+    
     // Will use localStorage.setItem on saveBtn click event
     function storeTask(event) {
         inputBlock = event.target.previousElementSibling;
