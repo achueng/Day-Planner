@@ -19,7 +19,7 @@ $(document).ready(function() {
     // Textarea input works with .past, .present, .future classes, and will be working with moment.js
         // Retreive data-hr value from hour divs
         for (var i=0; i<hoursList.length; i++) {
-            dataHour = hoursList[i].getAttribute("data-hr");
+            dataHour = parseInt(hoursList[i].getAttribute("data-hr"));
             // console.log(dataHour);
         }
         // Using toggle logic & conditionals (if/else)
