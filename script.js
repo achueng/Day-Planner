@@ -18,6 +18,7 @@ $(document).ready(function() {
         // console.log(moment()._d); // yields object of current day
         // console.log(moment().format('dddd, MMMM Do YYYY')); // yields string
         $("#currentDay").text(moment().format('dddd, MMMM Do YYYY'));
+        reset();
         init();
     // Textarea input works with .past, .present, .future classes, and will be working with moment.js
         // Retreive data-hr value from hour divs
@@ -67,8 +68,11 @@ $(document).ready(function() {
         }
     }
 
-
-
-
+    // Remove all tasks at the end of the day
+    function reset() {
+        if (currentHour === 0) {          
+            localStorage.clear();
+        }
+    }
 
 });
