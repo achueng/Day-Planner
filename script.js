@@ -20,13 +20,26 @@ $(document).ready(function() {
         // Retreive data-hr value from hour divs
         for (var i=0; i<hoursList.length; i++) {
             dataHour = parseInt(hoursList[i].getAttribute("data-hr"));
-            // console.log(dataHour);
+
+            // Using toggle logic & conditionals (if/else) // Add/remove classes .past, .present, .future --> .classList.add/remove
+            if (dataHour === currentHour) {
+                hoursList[i].nextElementSibling.classList.add("present");
+                hoursList[i].nextElementSibling.classList.remove("past");
+                hoursList[i].nextElementSibling.classList.remove("future");
+            }
+            else if (dataHour < currentHour) {
+                hoursList[i].nextElementSibling.classList.add("past");
+                hoursList[i].nextElementSibling.classList.remove("present");
+                hoursList[i].nextElementSibling.classList.remove("future");
+            }
+            else { // in this case, dataHour > currentHour
+                hoursList[i].nextElementSibling.classList.add("future");
+                hoursList[i].nextElementSibling.classList.remove("past");
+                hoursList[i].nextElementSibling.classList.remove("present");
+            }
         }
-        // Using toggle logic & conditionals (if/else)
+        
             // Add/remove classes .past, .present, .future --> .classList.add/remove
-            // Based on the current hour --> moment().hour(Number);
-                // Format - moment(currentHour).format("hh a");
-                // Use moment().isBefore("09 AM", "hour"); - isAfter, isSame
     
     // saveBtn will be working with local storage
         // Will use localStorage.setItem on saveBtn click event
