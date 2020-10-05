@@ -4,7 +4,7 @@ $(document).ready(function() {
     // Declare/Define global variables & DOM elements
     var currentHour = parseInt(moment().hour(Number).format("HH"));
     // console.log(currentHour); // yield number of current hour
-    var hoursList = document.querySelectorAll(".hour"); // array of hour divs
+    var hoursList = document.querySelectorAll(".hour"); // used vanilla js instead of jquery because was only able to get one element with $(".hour")
     var dataHour;
     
     // Get date to display using .text to get API (moment) data to appear in the <p id="currentDay"> tag
@@ -38,11 +38,14 @@ $(document).ready(function() {
                 hoursList[i].nextElementSibling.classList.remove("present");
             }
         }
-        
-            // Add/remove classes .past, .present, .future --> .classList.add/remove
     
     // saveBtn will be working with local storage
+    // Click event on saveBtn triggers storeTask function
+    $(".saveBtn").on("click", storeTask);
         // Will use localStorage.setItem on saveBtn click event
+        function storeTask() {
+            alert("stored");
+        }
         // Will use localStorage.getItem when page refreshed
 
 
